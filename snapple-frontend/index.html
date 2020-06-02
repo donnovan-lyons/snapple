@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snapple</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div id="game">
+        <div id="name-screen">
+            <form id="input-form">
+                <label>Enter your name:</label> <br>
+                <input type="text" id="name"><br>
+                <input type="submit">
+                <p>Press ENTER To Continue</p>
+            </form>
+        </div>
+        <div id="start-screen">
+            <h1 id="start"><em>Start New Game</em></h1>
+            <h1 id="restore"><em>Restore Game</em></h1>
+        </div>
+        <img src="images/snake-skull.gif">
+
+        <canvas id="canvas" height="400px" width="400px"></canvas>
+
+        <div id="high-score-screen">
+            <h1>High Score</h1>
+            <ol>
+                <li>Player 1 <!-- space --> 10</li>
+                <li>Player 2 <!-- space --> 9</li>
+                <li>Player 3 <!-- space --> 8</li>
+                <li>Player 4 <!-- space --> 7</li>
+                <li>Player 5 <!-- space --> 6</li>
+                <li>Player 6 <!-- space --> 5</li>
+                <li>Player 7 <!-- space --> 4</li>
+                <li>Player 8 <!-- space --> 3</li>
+                <li>Player 9 <!-- space --> 2</li>
+                <li>Player 10 <!-- space --> 1</li>
+            </ol>
+            <button>Play Again</button><br>
+            <button>Choose New User Name</button>
+        </div>
+        
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
