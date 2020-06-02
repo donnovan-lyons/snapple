@@ -14,7 +14,7 @@ let name
 
 let gridSize = 20; //testing variable. To be re-evaluated later for dynamic gridSize changes.
 
-let snake = new Snake("src/images/snake-graphics.png")
+let snake = new Snake("src/images/striker.png")
 let apple = new Consumable("src/images/apple.png")
 let skull = new Consumable("src/images/skull.png")
 let newGame  = new Game("Donnovan", snake, 0, apple, skull)

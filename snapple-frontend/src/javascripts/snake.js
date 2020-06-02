@@ -59,7 +59,7 @@ class Snake {
         }
     }
 
-    draw() {
+    drawSnapple() {
         for (let index = 0; index < this.body.length; index++) {
             // draw head
             const snakePart = this.body[index];
@@ -101,6 +101,52 @@ class Snake {
                     ctx.drawImage(this.image, 128, 64, 64, 64, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
                 } else {
                     ctx.drawImage(this.image, 128, 128, 64, 64, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                }
+            }
+        }
+    }
+    drawStriker() {
+        for (let index = 0; index < this.body.length; index++) {
+            // draw head
+            const snakePart = this.body[index];
+            if (index == 0) {
+                if (this.direction == "left") {
+                    ctx.drawImage(this.image, 48, 0, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                } else if (this.direction == "up") {
+                    ctx.drawImage(this.image, 0, 0, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                } else if (this.direction == "right") {
+                    ctx.drawImage(this.image, 16, 0, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                } else {
+                    ctx.drawImage(this.image, 32, 0, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                }
+            } else if (index == this.body.length - 1) {
+                // draw tail
+                const adj = this.body[index - 1]
+                if (snakePart.x < adj.x) {
+                    ctx.drawImage(this.image, 16, 16, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                } else if (snakePart.x > adj.x) {
+                    ctx.drawImage(this.image, 48, 16, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                } else if (snakePart.y < adj.y) {
+                    ctx.drawImage(this.image, 32, 16, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                } else {
+                    ctx.drawImage(this.image, 0, 16, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                }
+            } else {
+                // draw in between
+                const toTail = this.body[index + 1]
+                const toHead = this.body[index - 1]
+                if (toHead.x > snakePart.x && toTail.y > snakePart.y || toTail.x > snakePart.x && toHead.y > snakePart.y) {
+                    ctx.drawImage(this.image, 16, 32, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                } else if (toHead.y < snakePart.y && toTail.x > snakePart.x || toTail.y < snakePart.y && toHead.x > snakePart.x) {
+                    ctx.drawImage(this.image, 0, 32, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                } else if (snakePart.y == toTail.y && snakePart.y == toHead.y) {
+                    ctx.drawImage(this.image, 16, 48, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                } else if (toHead.x < snakePart.x && toTail.y > snakePart.y || toTail.x < snakePart.x && toHead.y > snakePart.y) {
+                    ctx.drawImage(this.image, 32, 32, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                } else if (snakePart.x == toTail.x && snakePart.x == toHead.x) {
+                    ctx.drawImage(this.image, 0, 48, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
+                } else {
+                    ctx.drawImage(this.image, 48, 32, 16, 16, this.body[index].x * gridSize, this.body[index].y * gridSize, gridSize, gridSize);
                 }
             }
         }
