@@ -9,8 +9,11 @@ class GameSerializer
             :include => {
                 :user => {
                     :only => [:name]
+                },
+                :snake => {
+                    :only => [:body, :direction, :image]
                 }
-        }, :except => [:created_at, :updated_at, :completed])
+        }, :except => [:updated_at])
     end
     
 
