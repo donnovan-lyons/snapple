@@ -78,6 +78,7 @@ function playAgainWithNewName() {
     document.getElementById("name").value = ""
     highScoreScreen.style.display = "none"
     nameScreen.style.display = ""
+    mainImage.style.display= ""
 }
 
 function restore() {
@@ -90,12 +91,16 @@ function addGameData(data) {
     restoredGameData = data
     if (restoredGameData) {
         restoreButton.style.display = ""
+    } else {
+        restoreButton.style.display = "none"
     }
 }
 
 function restoreGame() {
     const snakeBody = restoredGameData.snake.body.map(bodyPart => JSON.parse(bodyPart))
-    // debugger
+    if (snakeBody.length === 0) {
+        return init()
+    }
     const snakeX = snakeBody[0].x
     const snakeY = snakeBody[0].y
     const snakeDirection = restoredGameData.snake.direction
