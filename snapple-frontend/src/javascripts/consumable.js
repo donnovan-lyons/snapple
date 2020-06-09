@@ -1,8 +1,8 @@
 class Consumable {
-    constructor(imageFile){
+    constructor(imageFile, x = Math.floor(Math.random() * 20), y = Math.floor(Math.random() * 20)){
         this.image = this.loadImage(imageFile)
-        this.x = Math.floor(Math.random() * 20)
-        this.y = Math.floor(Math.random() * 20)
+        this.x = x
+        this.y = y
     }
 
     loadImage(imageFile) {

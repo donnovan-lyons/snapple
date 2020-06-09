@@ -1,15 +1,27 @@
 class Game {
-    constructor(player, snake, score = 0, apple, skull) {
+    constructor(id = null, player, snake, score = 0, apple, skull, completed = false) {
+        this.id = id;
         this.player = player;
-        this.snake = snake
-        this.score = score
-        this.apple = apple
-        this.skull = skull
-        this.completed = false
+        this.snake = snake;
+        this.score = score;
+        this.apple = apple;
+        this.skull = skull;
+        this.completed = completed;
+        if (this.id == null) {
+            this.init()
+        }
     }
 
-    checkHighScore() {
-
+    init() {
+        const game = {name: this.player}
+        return fetch("http://localhost:3000/games", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"},
+            body: JSON.stringify(game)
+        })
+        .then(resp => resp.json())
+        .then(json => this.id = json.id) //we want to return the id that was created and make our id it
     }
 
     checkContact() {
@@ -22,6 +34,7 @@ class Game {
             this.score += 10
             this.snake.grow();
             this.apple.spawn()
+            this.save()
         }
         if (this.snake.x == this.skull.x && this.snake.y == this.skull.y) {
             this.score += 25
@@ -50,45 +63,52 @@ class Game {
     }
 
     gameOver() {
-        console.log("Game Over")
-        clearInterval(interval);
-        fetch("http://localhost:3000/games/high_scores")
-        .then(resp => resp.json())
-        .then(json => Game.appendHighScore(json))
+        this.completed = true
+        this.pause()
         canvas.style.display = "none"
         highScoreScreen.style.display = ""
+        return fetch(`http://localhost:3000/games/high_scores`)
+        .then(resp => resp.json())
+        .then(json => Game.appendHighScores(json))
     }
 
     static appendHighScores(data) {
-        data.forEach(element => {
-            let tr = document.createElement('tr');
-            let name = document.createElement('td')
-            let score = document.createElement('td')
+        const highScoreTable = document.getElementById('high_scores')
+        highScoreTable.innerHTML = ""
+        for (let i = 0; i < data.length; i++) {
+            const element = data[i];
+            const tr = document.createElement('tr');
+            const rank = document.createElement('td')
+            const name = document.createElement('td')
+            const score = document.createElement('td')
+            rank.innerText = `${i + 1}.`
             name.innerText = element.user.name
             score.innerText = element.score
+            tr.appendChild(rank)
             tr.appendChild(name)
             tr.appendChild(score)
-            document.getElementById('high_scores').appendChild(tr)
-        });
+            highScoreTable.appendChild(tr)
+        } 
     }
-
-    s
 
     pause() {
         clearInterval(interval);
+        this.save()
+    }
+
+    resume() {
+        let x = 8;
+        interval = setInterval(this.draw.bind(this), 1000 / x);
     }
 
     save() {
-
+        const game = {id: this.id, name: this.player, snake: this.snake, score: this.score, apple: this.apple, skull: this.skull, completed: this.completed}
+        return fetch(`http://localhost:3000/games/${this.id}`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json"},
+            body: JSON.stringify(game)
+        })
     }
-    
+       
 }
-
-// fetch("http://localhost:3000/games", {
-//     method: "POST",
-//     headers: {
-//         "Content-Type": "application/json"},
-//         body: JSON.stringify({trainer_id: trainerId})
-//     })
-//     .then(resp => resp.json())
-//     .then(json => appendPokemon(json));

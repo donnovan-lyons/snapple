@@ -1,5 +1,5 @@
 class Snake {
-    constructor(imageFile, x = Math.floor(Math.random() * gridSize), y = Math.floor(Math.random() * gridSize), direction = ["left", "up", "right", "down"][Math.floor(Math.random() * 4)], speed = 0, snakeSize = 3) {
+    constructor(imageFile, x = Math.floor(Math.random() * gridSize), y = Math.floor(Math.random() * gridSize), direction = ["left", "up", "right", "down"][Math.floor(Math.random() * 4)], body = [], speed = 0) {
         this.x = x;
         this.y = y;
         this.direction = direction;
@@ -7,10 +7,12 @@ class Snake {
         this.directions = {"left": {x: -1,y: 0}, "up": {x:0, y:-1}, "right": {x: 1, y:0}, "down": {x:0, y:1}}
         this.image = this.loadImage(imageFile)
 
-        this.body = [];
+        this.body = body;
         
-        for (let index = 0; index < snakeSize; index++) {
-            this.body.push({x: this.x - index * this.directions[direction].x, y: this.y - index * this.directions[direction].y})
+        if (this.body.length == 0) {
+            for (let index = 0; index < 3; index++) {
+                this.body.push({x: this.x - index * this.directions[direction].x, y: this.y - index * this.directions[direction].y})
+            }
         }
     }
 
@@ -56,6 +58,14 @@ class Snake {
         this.body = []
         for (let index = 0; index < snakeSize; index++) {
             this.body.push({x: this.x - index * this.directions[direction].x, y: this.y - index * this.directions[direction].y})
+        }
+    }
+    
+    draw() {
+        if (this.image.src == "file:///Users/donnovanlyons/Desktop/snapple/snapple-frontend/src/images/striker.png") {
+            this.drawStriker()
+        } else {
+            this.drawSnapple()
         }
     }
 
@@ -105,6 +115,7 @@ class Snake {
             }
         }
     }
+
     drawStriker() {
         for (let index = 0; index < this.body.length; index++) {
             // draw head
