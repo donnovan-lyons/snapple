@@ -82,7 +82,7 @@ function playAgainWithNewName() {
 }
 
 function restore() {
-    return fetch(`http://localhost:3000/games/restore/${name}`)
+    return fetch(`http://localhost:3000/api/v1/games/restore/${name}`)
     .then(resp => resp.json())
     .then(json => addGameData(json[0]))
 }

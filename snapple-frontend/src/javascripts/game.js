@@ -14,7 +14,7 @@ class Game {
 
     init() {
         const game = {name: this.player}
-        return fetch("http://localhost:3000/games", {
+        return fetch("http://localhost:3000/api/v1/games", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"},
@@ -54,6 +54,7 @@ class Game {
     
         this.apple.draw()
         this.skull.draw()
+        this.drawScore()
     }
 
     start() {
@@ -67,7 +68,7 @@ class Game {
         this.pause()
         canvas.style.display = "none"
         highScoreScreen.style.display = ""
-        return fetch(`http://localhost:3000/games/high_scores`)
+        return fetch(`http://localhost:3000/api/v1/games/high_scores`)
         .then(resp => resp.json())
         .then(json => Game.appendHighScores(json))
     }
@@ -103,12 +104,19 @@ class Game {
 
     save() {
         const game = {id: this.id, name: this.player, snake: this.snake, score: this.score, apple: this.apple, skull: this.skull, completed: this.completed}
-        return fetch(`http://localhost:3000/games/${this.id}`, {
+        return fetch(`http://localhost:3000/api/v1/games/${this.id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json"},
             body: JSON.stringify(game)
         })
+    }
+
+    drawScore() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "brown";
+        ctx.fillText("Score: "+this.score, 8, 20);
+        // ctx.fillText("High Score: "+, canvas.width-65, 20);
     }
        
 }
