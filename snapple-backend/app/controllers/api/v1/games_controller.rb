@@ -15,7 +15,7 @@ class Api::V1::GamesController < ApplicationController
         user = User.find_or_create_by(name: params[:name])
         game = user.games.create()
         game.create_snake
-        redirect_to game_path(game)
+        redirect_to api_v1_game_path(game)
     end
 
     def update
