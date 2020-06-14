@@ -10,6 +10,7 @@ class Game {
         if (this.id == null) {
             this.init()
         }
+        Game.backGroundMusic.play();
     }
 
     init() {
@@ -31,14 +32,20 @@ class Game {
             }        
         }
         if (this.snake.x == this.apple.x && this.snake.y == this.apple.y) {
+            Game.eatAppleSound.play();
             this.score += 10
             this.snake.grow();
             this.apple.spawn()
             this.save()
         }
         if (this.snake.x == this.skull.x && this.snake.y == this.skull.y) {
+            Game.skullBoostSound.play()
             this.score += 25
+            clearInterval(interval);
             this.skull.spawn()
+            interval = setInterval(this.draw.bind(this), 80);
+            setTimeout(this.pause.bind(this), 8000);
+            setTimeout(this.resume.bind(this), 8001);
         }
     }
 
@@ -91,6 +98,16 @@ class Game {
             highScoreTable.appendChild(tr)
         } 
     }
+
+    static backGroundMusic = (function() {
+        const audio = new Audio("src/audio/skull-snake-game-music.m4a")
+        audio.loop = true
+        return audio
+    })()
+    static eatAppleSound = new Audio("src/audio/eat-apple.ogg");
+    static ratDeathSound = new Audio("src/audio/rat-death.mp3");
+    static skullBoostSound = new Audio("src/audio/skull-boost.wav");
+    static lightningStrikeSound = new Audio("src/audio/lightning-strike.wav");
 
     pause() {
         clearInterval(interval);
