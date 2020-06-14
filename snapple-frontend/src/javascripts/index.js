@@ -29,27 +29,27 @@ let newGame
 function keyDownEvent(e) {
     switch (e.keyCode) {
       case 37:
-          nextX = -1;
-          nextY = 0;
-          newGame.snake.direction = "left"
+          if (newGame.snake.direction != "right") {
+            newGame.snake.direction = "left"
+          }
           break;
       case 38:
-          nextX = 0;
-          nextY = -1;
-          newGame.snake.direction = "up"
+          if (newGame.snake.direction != "down") {
+            newGame.snake.direction = "up"
+          }
           break;
       case 39:
-          nextX = 1;
-          nextY = 0;
-          newGame.snake.direction = "right"
+          if (newGame.snake.direction != "left") {
+            newGame.snake.direction = "right"
+          }
           break;
       case 40:
-          nextX = 0;
-          nextY = 1;
-          newGame.snake.direction = "down"
+          if (newGame.snake.direction != "up") {
+            newGame.snake.direction = "down"
+          }
           break;
       case 80:
-          newGame.pause() //game saves
+          newGame.pause()
           break;
       case 82:
           newGame.resume()
