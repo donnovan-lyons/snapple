@@ -13,8 +13,10 @@ class Api::V1::GamesController < ApplicationController
 
     def create
         user = User.find_or_create_by(name: params[:name])
-        game = user.games.create()
-        game.create_snake
+        game = user.games.create(skull: "[#{params[:skull][:x]},#{params[:skull][:y]}]", apple: "[#{params[:apple][:x]},#{params[:apple][:y]}]", score: params[:score], completed: params[:completed])
+        snake_data = snake_params.to_h
+        snake_body = snake_data[:body].map {|body_part| body_part.to_json }
+        game.create_snake(direction: snake_data[:direction], body: snake_body)
         redirect_to api_v1_game_path(game)
     end
 
