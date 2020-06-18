@@ -23,13 +23,6 @@ class Audio {
         document.body.appendChild(this.audio);
     }
 
-    play() {
-        this.audio.play();
-    }
-    stop() {
-        this.audio.pause();
-    }    
-
     set loop(boolean) {
         if (boolean == true) {
             this.audio.loop = true

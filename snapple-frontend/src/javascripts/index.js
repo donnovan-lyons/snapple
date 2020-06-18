@@ -2,6 +2,7 @@ const canvas = document.getElementById('canvas');
 canvas.style.display = "none"
 const ctx = canvas.getContext("2d"); 
 const nameScreen = document.getElementById('name-screen')
+// nameScreen.style.display = "none"
 const startScreen = document.getElementById('start-screen')
 startScreen.style.display = "none"
 const startScreenInput = document.getElementById('input-form')
@@ -9,10 +10,12 @@ const startButton = document.getElementById('start')
 const restoreButton = document.getElementById('restore')
 restoreButton.style.display = "none"
 const mainImage = document.getElementsByTagName('img')[0]
+// mainImage.style.display = "none"
 const highScoreScreen = document.getElementById('high-score-screen')
 highScoreScreen.style.display = "none"
 const playAgainButton = document.getElementById('play-again')
 const newNameButton = document.getElementById('choose-new-name')
+
 let name
 let interval
 let restoredGameData
@@ -98,9 +101,6 @@ function addGameData(data) {
 
 function restoreGame() {
     const snakeBody = restoredGameData.snake.body.map(bodyPart => JSON.parse(bodyPart))
-    if (snakeBody.length === 0) {
-        return init()
-    }
     const snakeX = snakeBody[0].x
     const snakeY = snakeBody[0].y
     const snakeDirection = restoredGameData.snake.direction
@@ -136,3 +136,46 @@ startButton.addEventListener("click", init)
 restoreButton.addEventListener("click", restoreGame)
 playAgainButton.addEventListener("click", playAgain)
 newNameButton.addEventListener("click", playAgainWithNewName)
+
+// // Coding Challenge
+
+// const sortButton = document.getElementById('sort')
+// sortButton.addEventListener("click", fetchHighScores)
+
+// function fetchHighScores() {
+//     return fetch(`http://localhost:3000/api/v1/games/high_scores`)
+//     .then(resp => resp.json())
+//     .then(json => alphabetize(json))
+// }
+
+// function alphabetize(json) {
+//     let sortedData = json.sort(function(a, b) {
+//         var nameA = a.user.name.toUpperCase()
+//         var nameB = b.user.name.toUpperCase()
+//         if (nameA < nameB) {
+//           return -1;
+//         }
+//         if (nameA > nameB) {
+//           return 1;
+//         }
+      
+//         // names must be equal
+//         return 0;
+//       });
+//        const highScoreTable = document.getElementById('high_scores')
+//         highScoreTable.innerHTML = ""
+//         for (let i = 0; i < sortedData.length; i++) {
+//             const element = sortedData[i];
+//             const tr = document.createElement('tr');
+//             const rank = document.createElement('td')
+//             const name = document.createElement('td')
+//             const score = document.createElement('td')
+//             rank.innerText = `${i + 1}.`
+//             name.innerText = element.user.name
+//             score.innerText = element.score
+//             tr.appendChild(rank)
+//             tr.appendChild(name)
+//             tr.appendChild(score)
+//             highScoreTable.appendChild(tr)
+//         } 
+// }

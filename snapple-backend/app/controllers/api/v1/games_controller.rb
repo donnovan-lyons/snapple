@@ -27,6 +27,8 @@ class Api::V1::GamesController < ApplicationController
         snake = game.snake
         snake.update(direction: snake_data[:direction], body: snake_body)
         game.update(skull: "[#{params[:skull][:x]},#{params[:skull][:y]}]", apple: "[#{params[:apple][:x]},#{params[:apple][:y]}]", score: params[:score], completed: params[:completed])
+        games = Game.top_ten
+        render json: GameSerializer.new(games).to_serialized_json
     end
 
     def restore

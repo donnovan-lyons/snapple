@@ -14,7 +14,7 @@ class Game {
     }
 
     init() {
-        const game = {name: this.player}
+        const game = {id: this.id, name: this.player, snake: this.snake, score: this.score, apple: this.apple, skull: this.skull, completed: this.completed}
         return fetch("http://localhost:3000/api/v1/games", {
         method: "POST",
         headers: {
@@ -75,9 +75,6 @@ class Game {
         this.pause()
         canvas.style.display = "none"
         highScoreScreen.style.display = ""
-        return fetch(`http://localhost:3000/api/v1/games/high_scores`)
-        .then(resp => resp.json())
-        .then(json => Game.appendHighScores(json))
     }
 
     static appendHighScores(data) {
@@ -110,11 +107,13 @@ class Game {
     static lightningStrikeSound = new Audio("src/audio/lightning-strike.wav");
 
     pause() {
+        Game.backGroundMusic.pause();
         clearInterval(interval);
         this.save()
     }
 
     resume() {
+        Game.backGroundMusic.play();
         let x = 8;
         interval = setInterval(this.draw.bind(this), 1000 / x);
     }
@@ -126,6 +125,12 @@ class Game {
         headers: {
             "Content-Type": "application/json"},
             body: JSON.stringify(game)
+        })
+        .then(resp => resp.json())
+        .then(json => {
+            if (game.completed === true) {
+                Game.appendHighScores(json)
+            }
         })
     }
 
