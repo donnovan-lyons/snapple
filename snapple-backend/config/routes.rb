@@ -1,16 +1,15 @@
 Rails.application.routes.draw do
-  # get 'games/high_scores', to: 'games#high_scores'
-  # resources :games, only: [:show, :create, :update]
-  # get 'games/restore/:name', to: 'games#restore'
+
   namespace :api do
     namespace :v1 do
       resources :games do
+        # custom route collection
         collection do
           get 'high_scores', to: 'games#high_scores'
           get 'restore/:name', to: 'games#restore'
         end
       end
-      resources :games, only: [:show, :create, :update]
+      resources :games, only: [:create, :update]
     end
   end
   

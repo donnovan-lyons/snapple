@@ -6,11 +6,6 @@ class Api::V1::GamesController < ApplicationController
         render json: GameSerializer.new(games).to_serialized_json
     end
 
-    def show
-        game = Game.find(params[:id])
-        render json: GameSerializer.new(game).to_serialized_json
-    end
-
     def create
         user = User.find_or_create_by(name: params[:name])
         game = user.games.create(skull: "[#{params[:skull][:x]},#{params[:skull][:y]}]", apple: "[#{params[:apple][:x]},#{params[:apple][:y]}]", score: params[:score], completed: params[:completed])
