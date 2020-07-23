@@ -20,7 +20,7 @@ let restoredGameData
 
 let gridSize = 20; //testing variable. To be re-evaluated later for dynamic gridSize changes.
 
-// deckare all game variables
+// declare all game variables
 let snake
 let snapple = new Snake("src/images/snapple.png")
 let striker = new Snake("src/images/striker.png")
