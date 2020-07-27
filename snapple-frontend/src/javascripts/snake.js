@@ -53,13 +53,6 @@ class Snake {
         this.y += this.directions[this.direction].y
         this.body.unshift({x: this.x, y: this.y})
     }
-
-    respawn() {
-        this.body = []
-        for (let index = 0; index < snakeSize; index++) {
-            this.body.push({x: this.x - index * this.directions[direction].x, y: this.y - index * this.directions[direction].y})
-        }
-    }
     
     draw() {
         if (this.image.src == "file:///Users/donnovanlyons/Desktop/snapple/snapple-frontend/src/images/striker.png") {

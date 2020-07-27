@@ -78,7 +78,7 @@ class Game {
     }
 
     static appendHighScores(data) {
-        const highScoreTable = document.getElementById('high_scores')
+        const highScoreTable = document.getElementById('high-scores')
         highScoreTable.innerHTML = ""
         for (let i = 0; i < data.length; i++) {
             const element = data[i];
