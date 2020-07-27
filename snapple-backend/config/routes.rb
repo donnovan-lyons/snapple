@@ -9,7 +9,7 @@ Rails.application.routes.draw do
           get 'restore/:name', to: 'games#restore'
         end
       end
-      resources :games, only: [:create, :update]
+      resources :games, only: [:show, :create, :update]
     end
   end
   
